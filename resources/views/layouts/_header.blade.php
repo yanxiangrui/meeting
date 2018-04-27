@@ -8,7 +8,7 @@
     </a>
   </li>
   <li class="layui-nav-item layui-hide-xs" lay-unselect>
-    <a href="http://www.layui.com/admin/" target="_blank" title="前台">
+    <a href="http://zleader.cn" target="_blank" title="前台">
       <i class="layui-icon layui-icon-website"></i>
     </a>
   </li>
@@ -42,13 +42,14 @@
 
     <li class="layui-nav-item" lay-unselect>
         <a href="javascript:;">
-            <cite>贤心</cite>
+            <cite> {{ Auth::user()->name }} </cite>
         </a>
         <dl class="layui-nav-child">
             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
             <hr>
             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form> 
         </dl>
     </li>
   

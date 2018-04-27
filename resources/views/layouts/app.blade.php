@@ -20,6 +20,9 @@
 </head>
 <body class="layui-layout-body">
 
+    @include('layouts._message')
+
+    
     @yield('content')
 
     <!-- Scripts -->

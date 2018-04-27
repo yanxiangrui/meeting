@@ -93,11 +93,8 @@ layui.define(['laytpl', 'layer'], function(exports){
       type: 'get'
       ,dataType: 'json'
       ,success: function(res){
-        var statusCode = response.statusCode;
+        var statusCode = response.statusCode;        
 
-        console.log(statusCode); return;
-
-        
         //只有 response 的 code 一切正常才执行 done
         if(res[response.statusName] == statusCode.ok) {
           typeof options.done === 'function' && options.done(res); 
@@ -125,13 +122,6 @@ layui.define(['laytpl', 'layer'], function(exports){
           '请求异常，请重试<br><cite>错误信息：</cite>'+ code 
           ,debug()
         ].join('');
-
-        console.log(e.status);
-        console.log(e.responseJSON);
-        console.log(e.responseJSON.message);
-        console.log(code);
-        return;
-
         view.error(error);
         
         typeof error === 'function' && error(res);
