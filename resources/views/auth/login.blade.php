@@ -73,11 +73,8 @@
         }).use(['index', 'user'], function(){
             var $ = layui.$
             ,form = layui.form
-            ,view = layui.view;
-            
-            form.render();  
-
-            @include('common.error') 
+            ,view = layui.view; 
+            form.render();   
         });
     </script>
 @stop

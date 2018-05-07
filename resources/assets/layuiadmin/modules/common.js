@@ -54,6 +54,16 @@ layui.define(function(exports){
       type: 0
     });
   }
+
+  if ('formError' in app.tips) {
+    view.popup({
+      content: app.tips.formError,
+      offset: '15px', 
+      time: app.tips.closeTime,
+      icon: 5,
+      type: 0
+    });
+  }
   /* 全局提示 end */
 
 

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var tips = {
-	closeTime: 2000
+	closeTime: 1000
 };    
 
 @if (Session::has('message')) 
@@ -15,5 +15,15 @@ var tips = {
     tips.danger = '{{ Session::get('danger') }}';
 @endif
 
+
+@if (count($errors) > 0)
+	tips.formError = '';
+
+	@foreach ($errors->all() as $error)
+		tips.formError += "<p><cite>{{ $error }}</cite></p>";
+    @endforeach		
+@endif
+
 var app = {tips: tips};
+
 </script>

@@ -73,10 +73,9 @@
     }).use(['index', 'verify'], function () {
         var $ = layui.$
             ,view = layui.view
-            ,verify = layui.verify;
+            ,form = layui.verify;
 
-        verify.render(); 
-        @include('common.error')  
+        form.render(); 
     }); 
   </script> 
 @stop

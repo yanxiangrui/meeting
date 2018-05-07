@@ -18,11 +18,12 @@
 
     @yield('styles')
 
-    @include('common.common') 
+    @include('common.common')   
 </head>
 
 <body class="layui-layout-body">  
     @yield('content')
+
 
     <!-- Scripts -->
     <script src="{{ asset('layuiadmin/layui/layui.js') }}"></script> 
