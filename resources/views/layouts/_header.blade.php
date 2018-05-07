@@ -46,7 +46,7 @@
         </a>
         <dl class="layui-nav-child">
             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+            <dd><a lay-href="{{ route('users.resetpwd') }}">修改密码</a></dd>
             <hr>
             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form> 

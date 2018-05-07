@@ -14,4 +14,9 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
+
+
+Route::get('/users/resetpwd', 'UsersController@resetpwd')->name('users.resetpwd');
+Route::patch('/users/resetpwd', 'UsersController@resetpwdUpdate')->name('users.resetpwdUpdate');

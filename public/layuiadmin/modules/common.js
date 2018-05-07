@@ -23,6 +23,40 @@ layui.define(function(exports){
     document.getElementById('logout-form').submit();
   }; 
 
+
+  /* 全局提示 start */
+  if ('message' in app.tips) {
+    view.popup({
+      content: app.tips.message,
+      offset: '15px', 
+      time: app.tips.closeTime, 
+      icon: 0,
+      type: 0
+    });
+  }
+
+  if ('success' in app.tips) {
+    view.popup({
+      content: app.tips.success,
+      offset: '15px', 
+      time: app.tips.closeTime,
+      icon: 1,
+      type: 0
+    });
+  }
+
+  if ('danger' in app.tips) {
+    view.popup({
+      content: app.tips.danger,
+      offset: '15px', 
+      time: app.tips.closeTime,
+      icon: 5,
+      type: 0
+    });
+  }
+  /* 全局提示 end */
+
+
   //对外暴露的接口
   exports('common', {});
 });

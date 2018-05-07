@@ -74,7 +74,9 @@
             var $ = layui.$
             ,form = layui.form
             ,view = layui.view;
+            
             form.render();  
+
             @include('common.error') 
         });
     </script>

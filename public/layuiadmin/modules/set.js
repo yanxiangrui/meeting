@@ -18,7 +18,7 @@ layui.define(['form', 'upload'], function(exports){
   ,upload = layui.upload;
 
   var $body = $('body');
-  
+ 
   //自定义验证
   form.verify({
     nickname: function(value, item){ //value：表单的值、item：表单的DOM对象

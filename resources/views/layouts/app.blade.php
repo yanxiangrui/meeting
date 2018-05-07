@@ -15,14 +15,13 @@
 
     <link rel="stylesheet" href="{{ asset('layuiadmin/layui/css/layui.css') }}" media="all">
     <link rel="stylesheet" href="{{ asset('layuiadmin/style/admin.css') }}" media="all"> 
+
     @yield('styles')
 
+    @include('common.common') 
 </head>
-<body class="layui-layout-body">
 
-    @include('layouts._message')
-
-    
+<body class="layui-layout-body">  
     @yield('content')
 
     <!-- Scripts -->
