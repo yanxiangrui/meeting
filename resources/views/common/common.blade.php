@@ -1,6 +1,6 @@
 <script type="text/javascript">
 var tips = {
-	closeTime: 1000
+	closeTime: 0
 };    
 
 @if (Session::has('message')) 

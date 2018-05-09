@@ -1,9 +1,7 @@
 @extends('layouts.app') 
 
-@section('content')
+@section('content') 
 
-  
-    
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
@@ -11,43 +9,42 @@
                 <div class="layui-card"> 
                     <div class="layui-card-header">酒店管理</div>
 
-                    <div class="layui-card-body">
+                    <div class="layui-card-body">                        
 
-                        
                         <blockquote class="layui-elem-quote ">
+                            <div class="layui-btn-group">
+                                <a lay-tips="添加" class="layui-btn layui-btn-normal layui-btn-sm" href="{{ route('hotels.create') }}" ><i class="layui-icon layui-icon-add-1">&#xe654;</i> 添加</a> 
+                                <button lay-tips="删除" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon layui-icon-delete"></i> 删除</button>
+                            </div>
+
+                            <hr /> 
+
                             <div class="test-table-reload-btn">
+
                                 酒店名称：
                                 <div class="layui-inline">
                                     <input class="layui-input" name="id" id="test-table-demoReload" autocomplete="off">
                                 </div>
+
                                 <button class="layui-btn" data-type="reload">搜索</button>
                             </div>
+
                         </blockquote>
 
-
-
-                        <table class="layui-hide" id="test-table-form"></table>
+                        <table class="layui-hide" id="hotel-table-form" lay-filter="hotel-table-form"></table>
                         
-                        <script type="text/html" id="test-table-switchTpl">
-                          <!-- 这里的 checked 的状态只是演示 -->
-                          <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男" lay-filter="test-table-sexDemo"
-                           value="@{{ d.id }}" data-json="@{{ encodeURIComponent(JSON.stringify(d)) }}" @{{ d.id == 10003 ? 'checked' : '' }}>
-                        </script>
-                         
-                        <script type="text/html" id="test-table-checkboxTpl">
-                          <!-- 这里的 checked 的状态只是演示 -->
-                          <input type="checkbox" name="lock" title="锁定" lay-filter="test-table-lockDemo" 
-                           value="@{{d.id}}" data-json="@{{ encodeURIComponent(JSON.stringify(d)) }}" @{{ d.id == 10006 ? 'checked' : '' }}>
-                        </script>
-
+                        <script type="text/html" id="hotel-table-toolbar">
+                            <div class="layui-btn-group">
+                                <button lay-tips="修改" class="layui-btn layui-btn-normal layui-btn-xs hotel-edit" lay-event="edit"><i class="layui-icon layui-icon-edit">&#xe642;</i></button>
+                                <button lay-tips="删除" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></button>
+                            </div>
+                        </script> 
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    
 
 @stop 
 
@@ -61,10 +58,11 @@
         }).use(['index', 'table', 'form'], function () {
             var table = layui.table
                 ,form = layui.form
+                ,view = layui.view
                 ,$ = layui.$;
 
             table.render({
-                elem: '#test-table-form'
+                elem: '#hotel-table-form'
                 ,url: '{{ route("hotels.index") }}'
                 ,cellMinWidth: 80
                 ,loading: true
@@ -72,33 +70,47 @@
                     {type:'numbers'}
                     ,{type: 'checkbox'}
                     ,{field:'id', title:'ID', width:100, unresize: true, sort: true}
-                    ,{field:'username', title:'用户名'}
-                    ,{field:'city', title:'城市'}
-                    ,{field:'wealth', title: '财富', minWidth:120, sort: true}
-                    ,{field:'sex', title:'性别', width:85, templet: '#test-table-switchTpl', unresize: true}
-                    ,{field:'lock', title:'是否锁定', width:110, templet: '#test-table-checkboxTpl', unresize: true}
+                    ,{field:'name', title:'酒店名称'}
+                    ,{field:'created_at', title:'添加时间', sort: true}                   
+                    ,{field:'updated_at', title:'修改时间', sort: true}                   
+                    ,{fixed: 'right', width:150, align:'center', toolbar: '#hotel-table-toolbar'} 
                 ]]
-                ,page: true
-            });
-            
-            //监听性别操作
-            form.on('switch(test-table-sexDemo)', function(obj){
-                var json = JSON.parse(decodeURIComponent($(this).data('json')));
-                layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-              
-                json = table.clearCacheKey(json);
-                console.log(json); //当前行数据
-            });
-            
-            //监听锁定操作
-            form.on('checkbox(test-table-lockDemo)', function(obj){
-            var json = JSON.parse(decodeURIComponent($(this).data('json')));
-                layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-              
-                json = table.clearCacheKey(json);
-                console.log(json); //当前行数据
+                ,page: true 
             }); 
 
+            table.on('sort(hotel-table-form)', function (obj) {
+                table.reload('hotel-table-form', {
+                    initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
+                    ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        field: obj.field //排序字段
+                        ,order: obj.type //排序方式
+                    }
+                });
+            });
+
+            //监听工具条
+            table.on('tool(hotel-table-form)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+ 
+                if(layEvent === 'edit'){ //查看
+                    location.href = "hotels/" + data.id + "/edit";
+                } else if(layEvent === 'delete'){ //删除
+                    layer.confirm('真的删除行么', function(index){
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+                    });
+                } 
+            });
+             
+            // $('button.hotel-edit').on('click', function () {
+            //     var activeRow = table.checkStatus('hotel-table-form');
+            //     if (activeRow.data.length != 1) {
+            //         view.error('请勾选一条需要修改的数据！', {type: 0, icon: 5,  offset: '15px'}); 
+            //     } 
+            // });
         });
     </script>
 

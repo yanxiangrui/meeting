@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-class UserRequest extends Request 
-{
+class HotelRequest extends Request 
+{ 
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,7 +14,9 @@ class UserRequest extends Request
         switch ($this->method()) {
             case 'POST': 
             {
-                return [];
+                return [
+                    'name' => 'required|unique:hotels'
+                ];
             } 
             case 'PUT':
             {
@@ -22,9 +24,7 @@ class UserRequest extends Request
             }    
             case 'PATCH':
             {
-                return [
-                    'password' => 'required|confirmed|min:6'
-                ]; 
+                return []; 
             }
             case 'GET':
             {
@@ -38,6 +38,6 @@ class UserRequest extends Request
             {
                 return []; 
             }
-        }
+        } 
     }
 }

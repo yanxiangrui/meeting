@@ -1,5 +1,6 @@
 @extends('layouts.app') 
 
+@section('body_class', 'layui-layout-body')
 
 @section('content')
     <div id="LAY_app">
@@ -24,11 +25,11 @@
 
 
 @section('scripts')
-<script type="text/javascript">
-    layui.config({
-        base: '/layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use('index');
-</script>
+    <script type="text/javascript">
+        layui.config({
+            base: '/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use('index');
+    </script>
 @stop

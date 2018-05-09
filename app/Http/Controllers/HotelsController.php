@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\HotelRequest;
+use App\Models\Hotel;
 
 class HotelsController extends Controller
 {
@@ -14,7 +17,17 @@ class HotelsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return ['code' => 0, 'data' => []];
+
+            $offset = ($request->page - 1) * $request->limit;
+
+            $hotels = Hotel::where([])->orderBy($request->get('field', 'id'), $request->get('order', 'desc'))
+                        ->offset($offset)
+                        ->limit($request->limit)
+                        ->get();
+
+            $count = Hotel::where([])->count();
+
+            return ['code' => 0, 'data' => $hotels, 'msg' => '', 'count' => $count];
         } 
 
         return view('hotels.index'); 
@@ -36,9 +49,10 @@ class HotelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(HotelRequest $request)
+    { 
+        $hotel = Hotel::create($request->all());
+        return redirect()->route('hotels.index')->with('success', '酒店添加成功！'); 
     }
 
     /**
@@ -58,9 +72,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Hotel $hotel)
     {
-        //
+        return view('hotels.edit', compact('hotel')); 
     }
 
     /**
