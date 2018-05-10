@@ -25,8 +25,9 @@
 
                 <dl class="layui-nav-child">
                     <dd><a lay-href="{{ route('hotels.index') }}">酒店</a></dd>
-                    <dd><a lay-href="{{ route('rooms.index') }}">房间</a></dd>
-                    <dd><a lay-href="{{ route('dinners.index') }}">用餐</a></dd>
+                    <dd><a lay-href="{{ route('hotel_room_types.index') }}">房型</a></dd>
+                    <dd><a lay-href="{{ route('hotel_rooms.index') }}">房间</a></dd>
+                    <dd><a lay-href="{{ route('hotel_dinners.index') }}">餐费</a></dd>
                 </dl>
             </li>
 

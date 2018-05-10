@@ -97,10 +97,18 @@
                 if(layEvent === 'edit'){ //查看
                     location.href = "hotels/" + data.id + "/edit";
                 } else if(layEvent === 'delete'){ //删除
+
                     layer.confirm('真的删除行么', function(index){
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                         layer.close(index);
                         //向服务端发送删除指令
+                        view.req({
+                            url: 'hotels/' + data.id,
+                            type: 'delete',
+                            success: function (res) {
+                                layer.msg('删除成功！', {icon: 1});                                       
+                            }
+                        });
                     });
                 } 
             });

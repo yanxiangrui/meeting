@@ -9,10 +9,10 @@
                 <a href="{{ route('hotels.index') }}"><i class="layui-icon layui-icon-return"></i></a>
             </div>
             <div class="layui-card-body" style="padding: 15px;">
-                <form class="layui-form" action="{{ route('hotels.update') }}" method="POST" lay-filter="component-form-group">
+                <form class="layui-form" action="{{ route('hotels.update', $hotel) }}" method="POST" lay-filter="component-form-group">
                     {{ csrf_field() }}
 
-                    {{ method_field('DELETE') }}
+                    {{ method_field('PUT') }}
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">酒店名称</label>
@@ -50,8 +50,7 @@
             ,element = layui.element
             ,layer = layui.layer
             ,laydate = layui.laydate
-            ,form = layui.form;
-            
+            ,form = layui.form;  
             form.render(null, 'component-form-group'); 
         });
     </script>

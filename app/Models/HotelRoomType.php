@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HotelRoom extends Model
+class HotelRoomType extends Model
 {
 	/**
 	 * The attributes that are mass assignable.
@@ -12,16 +12,16 @@ class HotelRoom extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-	    'hotel_id', 'hotel_number', 'hotel_room_type_id',
+	    'hotel_id', 'title', 'bed_total', 'price', 'bed_price',
 	];
 
 	public function hotel()
    	{
     	return $this->belongsTo('App\Models\Hotel');
    	}
-
-   	public function roomtype()
+	
+	public function rooms()
    	{
-    	return $this->belongsTo('App\Models\HotelRoomType', 'hotel_room_type_id');
-   	}
+    	return $this->hasMany('App\Models\HotelRoom', 'hotel_room_type_id', 'id');
+   	}	
 }

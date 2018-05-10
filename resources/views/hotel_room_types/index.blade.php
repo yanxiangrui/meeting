@@ -7,13 +7,13 @@
             <div class="layui-col-md12">
 
                 <div class="layui-card"> 
-                    <div class="layui-card-header">餐费管理</div>
+                    <div class="layui-card-header">酒店房型</div>
 
                     <div class="layui-card-body">                        
 
                         <blockquote class="layui-elem-quote ">
                             <div class="layui-btn-group">
-                                <a lay-tips="添加" class="layui-btn layui-btn-normal layui-btn-sm" href="{{ route('hotel_dinners.create') }}" ><i class="layui-icon layui-icon-add-1">&#xe654;</i> 添加</a> 
+                                <a lay-tips="添加" class="layui-btn layui-btn-normal layui-btn-sm" href="{{ route('hotel_room_types.create') }}" ><i class="layui-icon layui-icon-add-1">&#xe654;</i> 添加</a> 
                                 <button lay-tips="删除" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon layui-icon-delete"></i> 删除</button>
                             </div>
 
@@ -31,14 +31,12 @@
                         </blockquote>
 
                         <table class="layui-hide" id="hotel-table-form" lay-filter="hotel-table-form"></table>
-
+                        
                         <script type="text/html" id="hotel-table-toolbar">
-
                             <div class="layui-btn-group">
                                 <button lay-tips="修改" class="layui-btn layui-btn-normal layui-btn-xs hotel-edit" lay-event="edit"><i class="layui-icon layui-icon-edit">&#xe642;</i></button>
                                 <button lay-tips="删除" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></button>
                             </div>
-
                         </script> 
                     </div>
                 </div>
@@ -64,7 +62,7 @@
 
             table.render({
                 elem: '#hotel-table-form'
-                ,url: '{{ route("hotel_rooms.index") }}'
+                ,url: '{{ route("hotel_room_types.index") }}'
                 ,cellMinWidth: 80
                 ,loading: true
                 ,cols: [[
@@ -72,38 +70,23 @@
                     ,{type: 'checkbox'}
                     ,{field:'id', title:'ID', width:100, unresize: true, sort: true}
                     ,{
+                        templet: function (d) {
+                            return d.hotel.name;
+                        }, 
                         title:'酒店名称'
-                        ,templet: function (d) {
-                            return d.hotel.name; 
-                        }
                     }
+                    ,{field:'title', title:'房型'} 
                     ,{
-                        title:'房型'
-                        ,templet: function (d) {
-                            return d.roomtype.title; 
-                        }    
+                        templet: function (d) {
+                            return d.rooms.length; 
+                        }, 
+                        title:'房间/个'
                     }
-                    ,{field:'hotel_number', title:'房号'}
-                    ,{
-                        title:'床位/张'
-                        ,templet: function (d) {
-                            return d.roomtype.bed_total; 
-                        }     
-                    }
-                    ,{
-                        title:'房费/元'
-                        ,templet: function (d) {
-                            return d.roomtype.price; 
-                        }   
-                    }
-                    ,{
-                        title:'床位费/元'
-                        ,templet: function (d) {
-                            return d.roomtype.bed_price; 
-                        }   
-                    }
+                    ,{field:'bed_total', title:'床位/张'}
+                    ,{field:'price', title:'房费/元'}
+                    ,{field:'bed_price', title:'床位费/元'}
                     ,{field:'created_at', title:'添加时间', sort: true}                   
-                    ,{field:'updated_at', title:'修改时间', sort: true}                   
+                    ,{field:'updated_at', title:'更新时间', sort: true}                   
                     ,{fixed: 'right', width:150, align:'center', toolbar: '#hotel-table-toolbar'} 
                 ]]
                 ,page: true 
@@ -124,9 +107,10 @@
                 var data = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
+
  
                 if(layEvent === 'edit'){ //查看
-                    location.href = "hotel_rooms/" + data.id + "/edit";
+                    location.href = "hotel_room_types/" + data.id + "/edit";
                 } else if(layEvent === 'delete'){ //删除
 
                     layer.confirm('真的删除行么', function(index){
@@ -134,7 +118,7 @@
                         layer.close(index);
                         //向服务端发送删除指令
                         view.req({
-                            url: 'hotel_rooms/' + data.id,
+                            url: 'hotel_room_types/' + data.id,
                             type: 'delete',
                             success: function (res) {
                                 layer.msg('删除成功！', {icon: 1});                                       
@@ -152,4 +136,5 @@
             // });
         });
     </script>
+
 @stop

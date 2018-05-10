@@ -11,12 +11,15 @@ class HotelRequest extends Request
      */
     public function rules()
     {
+
+        return [
+            'name' => 'required|unique:hotels'
+        ];
+
         switch ($this->method()) {
             case 'POST': 
             {
-                return [
-                    'name' => 'required|unique:hotels'
-                ];
+                
             } 
             case 'PUT':
             {

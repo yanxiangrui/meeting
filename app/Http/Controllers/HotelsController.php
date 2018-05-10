@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
 
@@ -29,7 +28,6 @@ class HotelsController extends Controller
 
             return ['code' => 0, 'data' => $hotels, 'msg' => '', 'count' => $count];
         } 
-
         return view('hotels.index'); 
     }
 
@@ -84,9 +82,10 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HotelRequest $request, Hotel $hotel)
     {
-        //
+        $hotel->update(['name' => $request->name]);
+        return redirect()->route('hotels.index')->with('success', '酒店修改成功！');     
     }
 
     /**
@@ -95,8 +94,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete(); 
+        return ['code' => 0, 'msg' => '删除成功！'];  
     }
 }

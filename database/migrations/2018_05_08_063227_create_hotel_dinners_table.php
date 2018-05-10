@@ -15,6 +15,7 @@ class CreateHotelDinnersTable extends Migration
     {
         Schema::create('hotel_dinners', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('hotel_id')->comment('酒店ID'); 
             $table->string('title', 100)->comment('餐'); 
             $table->decimal('price', 8, 2)->comment('餐费');
             $table->timestamps();

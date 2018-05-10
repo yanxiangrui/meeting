@@ -14,4 +14,14 @@ class Hotel extends Model
 	protected $fillable = [
 	    'name',
 	];
+
+    public function roomtypes()
+    {
+        return $this->hasMany('App\Models\HotelRoomType');
+    }
+
+    public function rooms()
+    {
+    	return $this->hasMany('App\Models\HotelRoom');	
+    }
 }
