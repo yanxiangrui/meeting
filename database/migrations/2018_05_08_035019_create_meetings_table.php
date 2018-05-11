@@ -15,6 +15,8 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name', 200)->comment('会议名称');
+            $table->text('description')->nullable(true)->comment('会议描述');
             $table->timestamps();
         });
     }

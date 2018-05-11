@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMemberMeetingsTable extends Migration
+class CreateMemberLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateMemberMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('member_meetings', function (Blueprint $table) {
+        Schema::create('member_levels', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('meeting_id')->comment('会议ID');  
-            $table->integer('member_id')->comment('会员ID');  
+            $table->string('name', 100)->comment('等级名称'); 
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateMemberMeetingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_meetings');
+        Schema::dropIfExists('member_levels');
     }
 }

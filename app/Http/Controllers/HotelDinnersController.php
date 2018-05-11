@@ -18,13 +18,13 @@ class HotelDinnersController extends Controller
     {
         if ($request->ajax()) {
             $offset = ($request->page - 1) * $request->limit;
-            $hotels = HotelRoom::where([])->orderBy($request->get('field', 'id'), $request->get('order', 'desc'))
-                        ->with('hotel', 'roomtype')
+            $hotels = HotelDinner::where([])->orderBy($request->get('field', 'id'), $request->get('order', 'desc'))
+                        ->with('hotel')
                         ->offset($offset)
                         ->limit($request->limit)
                         ->get();
 
-            $count = HotelRoom::where([])->count();
+            $count = HotelDinner::where([])->count();
             return ['code' => 0, 'data' => $hotels, 'msg' => '', 'count' => $count];
         }
 
@@ -54,9 +54,9 @@ class HotelDinnersController extends Controller
             return redirect()->back()->withInput()->withErrors('选择酒店不存在！');
         }
 
-        // if (HotelRoom::where(['hotel_id' => $request->hotel_id, 'hotel_number' => $request->hotel_number])->count()) {
-        //     return redirect()->back()->withInput()->withErrors('房号已经存在！');
-        // } 
+        if (HotelDinner::where(['hotel_id' => $request->hotel_id, 'title' => $request->title])->count()) {
+            return redirect()->back()->withInput()->withErrors('名称重复！');
+        } 
 
         HotelDinner::create($request->all());
         return redirect()->route('hotel_dinners.index')->with('success', '酒店餐费添加成功！'); 
@@ -68,9 +68,8 @@ class HotelDinnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(HotelDinner $hotelDinner)
     {
-        //
     }
 
     /**
@@ -79,9 +78,10 @@ class HotelDinnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(HotelDinner $hotelDinner)
     {
-        //
+        $hotels = Hotel::where([])->get();
+        return view('hotel_dinners.edit', compact('hotelDinner', 'hotels')); 
     }
 
     /**
@@ -91,9 +91,22 @@ class HotelDinnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HotelDinnerRequest $request, HotelDinner $hotelDinner)
     {
-        //
+        if (!Hotel::where(['id' => $request->hotel_id])->count()) {
+            return redirect()->back()->withInput()->withErrors('选择酒店不存在！');
+        }
+
+        if (HotelDinner::where([
+            ['hotel_id', '=', $request->hotel_id],
+            ['title', '=', $request->title],
+            ['id', '<>', $hotelDinner->id]
+        ])->count()) {
+            return redirect()->back()->withInput()->withErrors('名称已经存在！');
+        } 
+
+        $hotelDinner->update($request->all());
+        return redirect()->route('hotel_dinners.index')->with('success', '餐费修改成功！');    
     }
 
     /**
@@ -102,8 +115,9 @@ class HotelDinnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(HotelDinner $hotelDinner)
     {
-        //
+        $hotelDinner->delete();
+        return ['code' => 0, 'msg' => '删除成功！'];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-class HotelRequest extends Request 
-{ 
+class MeetingRequest extends Request 
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -11,13 +11,14 @@ class HotelRequest extends Request
      */
     public function rules()
     {
-        if ($this->route('hotel')) {
-            $id = $this->route('hotel')->id; //获取当前需要排除的id
+        if ($this->route('meeting')) {
+            $id = $this->route('meeting')->id;
         } else {
             $id = 0; 
         }
+
         return [
-            'name' => 'required|unique:hotels,name,'. $id 
+            'name' => 'required|unique:meetings,name,'.$id,
         ];
     }
 }

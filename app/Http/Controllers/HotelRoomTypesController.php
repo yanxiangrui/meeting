@@ -58,6 +58,10 @@ class HotelRoomTypesController extends Controller
      */
     public function store(HotelRoomTypeRequest $request)
     {
+        if (!Hotel::where(['id' => $request->hotel_id])->count()) {
+            return redirect()->back()->withInput()->withErrors('选择酒店不存在！');
+        }
+
         if (HotelRoomType::where(['hotel_id' => $request->hotel_id, 'title' => $request->title])->count()) {
             return redirect()->back()->withInput()->withErrors('房型名称已存在！');
         }

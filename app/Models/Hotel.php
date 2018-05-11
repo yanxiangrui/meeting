@@ -24,4 +24,9 @@ class Hotel extends Model
     {
     	return $this->hasMany('App\Models\HotelRoom');	
     }
+
+    public function dinner()
+    {
+    	return $this->hasMany('App\Models\HotelDinner');		
+    }
 }

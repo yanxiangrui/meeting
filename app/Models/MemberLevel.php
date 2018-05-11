@@ -4,20 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Meeting extends Model
+class MemberLevel extends Model
 {
-
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'description'
+		'name'
 	];	
 
-	public function journeys()
+	public function members()
 	{
-		return $this->hasMany('App\Models\MeetingJourney');
+		return $this->hasMany('App\Models\Member');
 	}
 }

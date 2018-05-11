@@ -5,21 +5,28 @@
     <div class="layui-fluid">
         <div class="layui-card">
             <div class="layui-card-header">
-                修改酒店 
-                <a href="{{ route('hotels.index') }}"><i class="layui-icon layui-icon-return"></i></a>
+                修改会议 
+                <a href="{{ route('meeting_journeys.index') }}"><i class="layui-icon layui-icon-return"></i></a>
             </div>
             <div class="layui-card-body" style="padding: 15px;">
-                <form class="layui-form" action="{{ route('hotels.update', $hotel) }}" method="POST" lay-filter="component-form-group">
+                <form class="layui-form" action="{{ route('meeting_journeys.update', $journey) }}" method="POST" lay-filter="component-form-group">
                     {{ csrf_field() }}
 
                     {{ method_field('PUT') }}
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label">酒店名称</label>
+                        <label class="layui-form-label">会议名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="name" placeholder="酒店名称" lay-verify="required" value="{{ old('name', $hotel->name) }}" class="layui-input">
+                            <input type="text" name="name" placeholder="酒店名称" lay-verify="required" value="{{ old('name', $journey->name) }}" class="layui-input">
                         </div>
                     </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">会议描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="description" placeholder="请输入内容" class="layui-textarea">{{ old('description', $journey->description) }}</textarea>
+                        </div>
+                    </div>  
   
                     <div class="layui-form-item layui-layout-admin">
                         <div class="layui-input-block">

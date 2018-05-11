@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\HotelRequest;
-use App\Models\Hotel;
+use App\Models\Member;
+use App\Models\MemberLevel;
+use App\Http\Requests\MemberRequest;
 
-class HotelsController extends Controller
+class MembersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,8 +28,9 @@ class HotelsController extends Controller
             $count = Hotel::where([])->count();
 
             return ['code' => 0, 'data' => $hotels, 'msg' => '', 'count' => $count];
-        } 
-        return view('hotels.index'); 
+        }
+
+        return view('members.index'); 
     }
 
     /**
@@ -38,7 +40,8 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        return view('hotels.create'); 
+        $levels = MemberLevel::where([])->get();
+        return view('', compact(''));
     }
 
     /**
@@ -47,10 +50,9 @@ class HotelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HotelRequest $request)
-    { 
-        Hotel::create($request->all());
-        return redirect()->route('hotels.index')->with('success', '酒店添加成功！'); 
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
@@ -70,9 +72,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Hotel $hotel)
+    public function edit($id)
     {
-        return view('hotels.edit', compact('hotel')); 
+        //
     }
 
     /**
@@ -82,11 +84,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(HotelRequest $request, Hotel $hotel)
+    public function update(Request $request, $id)
     {
-      
-        $hotel->update(['name' => $request->name]);
-        return redirect()->route('hotels.index')->with('success', '酒店修改成功！');     
+        //
     }
 
     /**
@@ -95,9 +95,8 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel)
+    public function destroy($id)
     {
-        $hotel->delete(); 
-        return ['code' => 0, 'msg' => '删除成功！'];  
+        //
     }
 }

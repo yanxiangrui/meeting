@@ -33,7 +33,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">床位数量</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="bed_total" value="1" title="1张" @if (1 == old('bed_total')) checked @endif >
+                            <input type="radio" name="bed_total" value="1" title="1张" @if (1 == old('bed_total', 1)) checked @endif >
                             <input type="radio" name="bed_total" value="2" title="2张" @if (2 == old('bed_total')) checked @endif >
                             <input type="radio" name="bed_total" value="3" title="3张" @if (3 == old('bed_total')) checked @endif >
                             <input type="radio" name="bed_total" value="4" title="4张" @if (4 == old('bed_total')) checked @endif >

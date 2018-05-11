@@ -33,6 +33,20 @@ Route::resource('hotel_room_types', 'HotelRoomTypesController');
 // 酒店餐费
 Route::resource('hotel_dinners', 'HotelDinnersController');
 
+// 会议
+Route::resource('meetings', 'MeetingsController');
+
+// 行程
+Route::resource('meeting_journeys', 'MeetingJourneysController');
+
+// 参会人员
+Route::resource('members', 'MembersController');
+
+// 参会人员级别
+Route::resource('member_levels', 'MemberLevelsController');
+
+
+
 
 
 

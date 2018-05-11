@@ -6,10 +6,10 @@
         <div class="layui-card">
             <div class="layui-card-header">
                 添加餐费 
-                <a href="{{ route('hotel_rooms.index') }}"><i class="layui-icon layui-icon-return"></i></a>
+                <a href="{{ route('hotel_dinners.index') }}"><i class="layui-icon layui-icon-return"></i></a>
             </div>
             <div class="layui-card-body" style="padding: 15px;">
-                <form class="layui-form" action="{{ route('hotel_rooms.store') }}" method="POST" lay-filter="component-form-group">
+                <form class="layui-form" action="{{ route('hotel_dinners.store') }}" method="POST" lay-filter="component-form-group">
                     {{ csrf_field() }}
 
                     <div class="layui-form-item">
@@ -70,46 +70,10 @@
             ,form = layui.form;
 
 
-            var hotel_room_type_id = {{ old('hotel_room_type_id', 0) }}
-
-            function roomtypeinit(id)
-            {
-                view.req({
-                    url: "{{ route('hotel_room_types.index') }}",
-                    type: 'get',
-                    data: {
-                        page: 1,
-                        limit: 100,
-                        hotel_id: id  
-                    },
-                    success: function (res) { 
-                        if (res.code == 0) {
-                            if (res.data.length == 0) {
-                                layer.msg('当前酒店还没有添加房型呢！', {icon: 5}); 
-                            }
-                            $('select[lay-filter=component-form-hotel-room-type] > option').empty(); 
-                            $.each(res.data, function (index) {
-                                if (hotel_room_type_id == 0 && index === 0) {
-                                    $('select[lay-filter=component-form-hotel-room-type]').append('<option selected value="' + this.id + '">' + this.title + '</option>');
-                                } else if (hotel_room_type_id == this.id) {
-                                    $('select[lay-filter=component-form-hotel-room-type]').append('<option selected value="' + this.id + '">' + this.title + '</option>');
-                                } else {
-                                    $('select[lay-filter=component-form-hotel-room-type]').append('<option value="' + this.id + '">' + this.title + '</option>');
-                                }
-                            });
-                            form.render('select', 'component-form-group');
-                        }
-                    }
-                }); 
-            }
-
-            // form.on('select(component-form-hotel)', function(data){ 
-            //     //向服务端发送删除指令
-            //     roomtypeinit(data.value); 
-            // });  
+           
 
             form.render(null, 'component-form-group');  
-            // roomtypeinit($('select[name=hotel_id]').val());
+            
         });
     </script>
 

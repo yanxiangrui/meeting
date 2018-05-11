@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\HotelRequest;
-use App\Models\Hotel;
+use App\Models\Meeting;
+use App\Http\Requests\MeetingRequest;
 
-class HotelsController extends Controller
+class MeetingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,16 +19,15 @@ class HotelsController extends Controller
 
             $offset = ($request->page - 1) * $request->limit;
 
-            $hotels = Hotel::where([])->orderBy($request->get('field', 'id'), $request->get('order', 'desc'))
+            $meetings = Meeting::where([])->orderBy($request->get('field', 'id'), $request->get('order', 'desc'))
                         ->offset($offset)
                         ->limit($request->limit)
                         ->get();
 
-            $count = Hotel::where([])->count();
-
-            return ['code' => 0, 'data' => $hotels, 'msg' => '', 'count' => $count];
-        } 
-        return view('hotels.index'); 
+            $count = Meeting::where([])->count();
+            return ['code' => 0, 'data' => $meetings, 'msg' => '', 'count' => $count];
+        }
+        return view('meetings.index');
     }
 
     /**
@@ -38,7 +37,7 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        return view('hotels.create'); 
+        return view('meetings.create'); 
     }
 
     /**
@@ -47,10 +46,10 @@ class HotelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HotelRequest $request)
+    public function store(MeetingRequest $request)
     { 
-        Hotel::create($request->all());
-        return redirect()->route('hotels.index')->with('success', '酒店添加成功！'); 
+        Meeting::create($request->all());
+        return redirect()->route('meetings.index')->with('success', '添加成功！'); 
     }
 
     /**
@@ -70,9 +69,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Hotel $hotel)
+    public function edit(Meeting $meeting)
     {
-        return view('hotels.edit', compact('hotel')); 
+        return view('meetings.edit', compact('meeting'));
     }
 
     /**
@@ -82,11 +81,10 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(HotelRequest $request, Hotel $hotel)
+    public function update(MeetingRequest $request, Meeting $meeting)
     {
-      
-        $hotel->update(['name' => $request->name]);
-        return redirect()->route('hotels.index')->with('success', '酒店修改成功！');     
+        $meeting->update($request->all());
+        return redirect()->route('meetings.index')->with('success', '修改成功！');
     }
 
     /**
@@ -95,9 +93,9 @@ class HotelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel)
+    public function destroy(Meeting $meeting)
     {
-        $hotel->delete(); 
-        return ['code' => 0, 'msg' => '删除成功！'];  
+        $meeting->delete();
+        return ['code' => 0, 'msg' => '删除成功！'];
     }
 }

@@ -6,10 +6,10 @@
         <div class="layui-card">
             <div class="layui-card-header">
                 添加房间 
-                <a href="{{ route('hotel_dinners.index') }}"><i class="layui-icon layui-icon-return"></i></a>
+                <a href="{{ route('hotel_rooms.index') }}"><i class="layui-icon layui-icon-return"></i></a>
             </div>
             <div class="layui-card-body" style="padding: 15px;">
-                <form class="layui-form" action="{{ route('hotel_dinners.store') }}" method="POST" lay-filter="component-form-group">
+                <form class="layui-form" action="{{ route('hotel_rooms.store') }}" method="POST" lay-filter="component-form-group">
                     {{ csrf_field() }}
 
                     <div class="layui-form-item">

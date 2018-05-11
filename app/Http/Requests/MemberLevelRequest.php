@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class HotelDinnerRequest extends Request 
+class MemberLevelRequest extends Request 
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,8 +12,7 @@ class HotelDinnerRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required',
-            'price' => 'required|numeric',
+            //
         ];
     }
 }
