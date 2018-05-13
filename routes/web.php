@@ -42,6 +42,7 @@ Route::resource('meeting_journeys', 'MeetingJourneysController');
 // 参会人员
 Route::resource('members', 'MembersController');
 
+
 // 参会人员级别
 Route::resource('member_levels', 'MemberLevelsController');
 
